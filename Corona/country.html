@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<head>
+	<title></title>
+<!--	<?php include 'link.php'; ?>
+	<?php include 'style.php'; ?>-->
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="style.css"> 
+ 
+	<script src="https://kit.fontawesome.com/68e2517e5f.js" crossorigin="anonymous"></script>
+</head>
+<body onload="fetch()">
+	<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light nav_style p-3">  
+		<!-- p-3 for padding, pl-5 for padding left,pr-6 for padding right-->
+  <a class="navbar-brand pl-5" href="#">COVID-19-Tracker</a>  
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>  
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto pr-5">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#aboutid">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#sympid">Symptoms</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#preventid">Preventions</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#contactid">Contact</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Info
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Masks</a>
+          <a class="dropdown-item" href="#">Vaccination</a>
+          <a class="dropdown-item" href="#">Facts about Covid</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">FAQ</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!--//////////////////World updates/////////////////////-->
+<section class="corona_update container-fluid">
+  <div class="mb-3">
+    <h3 class="text-center text-uppercase mt-5" style="color:#db7070;">Reports of Countries</h3>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered table-stripped text-center" id="tbval">
+      <tr>
+        <th>Country</th>
+        <th>TotalConfirmed</th>
+        <th>TotalRecovered</th>
+        <th>TotalDeaths</th>
+        <th>NewConfirmed</th>
+        <th>NewRecovered</th>
+        <th>NewDeaths</th>
+      </tr>
+    </table>
+  </div>
+</section>
+
+
+<!--*************footer*******************-->
+
+<footer class="footer">
+  <div class="container footer_container">
+    <div class="row footer_row">
+      <div class="footer-col">
+        <h4>Covid</h4>
+        <ul>
+          <li><a href="#">About COVID</a></li>
+          <li><a href="#">Symptoms</a></li>
+          <li><a href="#">Prevention</a></li>
+          <li><a href="#">Contact us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Tracker</h4>
+        <ul>
+          <li><a href="#">India</a></li>
+          <li><a href="#">World</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Follow me</h4>
+        <div class="social-link">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fa fa-github"></i></a>
+          <a href="#"><i class="fa fa-facebook"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="footer_style text-white text-center container-fluid">
+  <p>Copyright by Upasona</p>
+</div>
+</footer>
+<script type="text/javascript">
+  function fetch(){
+      $.get("https://api.covid19api.com/summary",
+            function(data){
+              //console.log(data['Countries'].length);
+              var tbval=document.getElementById('tbval');
+              for(var i=1;i<(data['Countries'].length);i++){
+                var x=tbval.insertRow();  //new row will be inserted into table
+                x.insertCell(0);
+                tbval.rows[i].cells[0].innerHTML= data['Countries'][i-1]['Country'];
+                tbval.rows[i].cells[0].style.background='#f7dfdf';
+
+                    x.insertCell(1);
+                tbval.rows[i].cells[1].innerHTML= data['Countries'][i-1]['TotalConfirmed'];
+                tbval.rows[i].cells[1].style.background='#dce7f7';
+                    
+                x.insertCell(2);
+                tbval.rows[i].cells[2].innerHTML= data['Countries'][i-1]['TotalRecovered'];
+                tbval.rows[i].cells[2].style.background='#d2fcfa';
+
+                x.insertCell(3);
+                tbval.rows[i].cells[3].innerHTML= data['Countries'][i-1]['TotalDeaths'];
+                tbval.rows[i].cells[3].style.background='#fcf9d2';
+
+                x.insertCell(4);
+                tbval.rows[i].cells[4].innerHTML= data['Countries'][i-1]['NewConfirmed'];
+                tbval.rows[i].cells[4].style.background='#ffe0f4';
+
+                x.insertCell(5);
+                tbval.rows[i].cells[5].innerHTML= data['Countries'][i-1]['NewRecovered'];
+                tbval.rows[i].cells[5].style.background='#e0e0ff';
+
+                x.insertCell(6);
+                tbval.rows[i].cells[6].innerHTML= data['Countries'][i-1]['NewDeaths'];
+                tbval.rows[i].cells[6].style.background='#e0ffe7';
+
+
+
+
+
+
+
+              }
+            }
+
+
+
+
+        )
+    }
+</script>
+
+</body>
+</html>
